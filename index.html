@@ -61,6 +61,7 @@
         <li><a href="publications.html">Publications</a></li>
         <li><a href="cv.html">Background</a></li>
         <li><a href="beyond.html">Beyond</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
 
@@ -80,7 +81,8 @@
       <div>
         <h1>Benedetta Perrone</h1>
         <p class="role">PhD Researcher in Electrical Engineering</p>
-        <p class="affil">KU Leuven &mdash; Department of Electrical Engineering (ESAT), STADIUS Center for Dynamical Systems, Signal Processing and Data Analytics &middot; Leuven, Belgium</p>
+        <p class="role2">Biomedical engineer by training</p>
+        <p class="affil">KU Leuven, Department of Electrical Engineering (ESAT), STADIUS Center for Dynamical Systems, Signal Processing and Data Analytics &middot; Leuven, Belgium</p>
 
         <div class="herosoc">
           <a href="https://scholar.google.com/citations?user=cEQqSfsAAAAJ&hl=it&oi=ao" target="_blank" rel="noopener" aria-label="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></a>
@@ -98,22 +100,20 @@
 
   <div class="wrap">
     <dl class="strip">
-      <div><dt class="label">Position</dt><dd>PhD Researcher, KU Leuven &mdash; since Nov 2025</dd></div>
-      <div><dt class="label">Education</dt><dd>M.Sc. Biomedical Engineering, Politecnico di Torino &mdash; 110/110 <i>cum laude</i></dd></div>
-      <div><dt class="label">Fields</dt><dd>EEG &middot; Brain&ndash;computer interfaces &middot; Biomedical signal processing</dd></div>
+      <div><dt class="label">Position</dt><dd>PhD Researcher, KU Leuven &middot; since Nov 2025</dd></div>
+      <div><dt class="label">Fields</dt><dd>EEG &middot; Brain-computer interfaces &middot; Biomedical signal processing</dd></div>
     </dl>
   </div>
 
   <!-- ============ ABOUT ============ -->
   <section id="about">
     <div class="wrap sec">
-      <span class="label">About</span>
+      <h2 class="label">About me</h2>
       <div>
-        <h2 class="lead">About me</h2>
         <div class="bioblock">
-          <p class="bio">My research concerns EEG-based brain&ndash;computer interfaces for auditory attention decoding, under the supervision of <a href="https://homes.esat.kuleuven.be/~abertran/" target="_blank" rel="noopener">Prof. Alexander Bertrand</a> and <a href="https://simongeirnaert.com/" target="_blank" rel="noopener">Dr. Simon Geirnaert</a>. I work on algorithms that identify which speaker a listener is attending to in a multi-talker environment, with applications in neuro-steered hearing devices.</p>
-          <p class="bio">The problem I focus on is calibration. Existing decoders are trained per subject and need minutes of labelled EEG from every new user before they work at all, which is acceptable in a lab and unacceptable in a product. My work is on decoders that generalise to a listener the model has never seen, and that operate on naturalistic stimuli rather than the controlled sentences used in most published experiments.</p>
-          <p class="bio">Before joining KU Leuven I held a research fellowship at Politecnico di Torino, where I worked on automated sleep disorder assessment from polysomnography. My M.Sc. thesis applied transformer models to vocal signals in Parkinson's disease. I studied biomedical engineering in Turin and spent an Erasmus semester at Trinity College Dublin.</p>
+          <p class="bio">My research is on auditory attention decoding: working out, from a listener's brain activity, which of several people talking at once they are actually trying to follow. A hearing aid has to guess this today from indirect cues such as head orientation or which voice is loudest, and in a crowded room those cues are frequently wrong. Electroencephalography offers a more direct route, because the brain tracks an attended voice more strongly than the ones being ignored. I work on this under the supervision of <a href="https://homes.esat.kuleuven.be/~abertran/" target="_blank" rel="noopener">Prof. Alexander Bertrand</a> and <a href="https://simongeirnaert.com/" target="_blank" rel="noopener">Dr. Simon Geirnaert</a>.</p>
+          <p class="bio">These methods work well in a laboratory and much less well outside one. Published results tend to rest on carefully controlled speech, long uninterrupted recordings and dense arrays of scalp electrodes, while a hearing device has to cope with ordinary conversation, with listeners whose hearing and neural responses differ widely from one another, and with a handful of electrodes hidden around the ear. I work on decoding algorithms that treat that variability as something to be modelled rather than avoided, and that adapt to a new listener without first asking them to sit through a calibration session.</p>
+          <p class="bio">I am a biomedical engineer by training. Before moving to Leuven I held a research fellowship at Politecnico di Torino, working on automated assessment of sleep disorders from overnight recordings, and my master's thesis applied transformer models to vocal signals in Parkinson's disease. I studied in Turin and spent an Erasmus semester at Trinity College Dublin.</p>
         </div>
         <div class="acts">
           <a class="btn solid" href="publications.html">Publications</a>
@@ -144,7 +144,7 @@
             <div>
               <h3><a href="https://doi.org/10.1016/j.bspc.2025.108954" target="_blank" rel="noopener">Voice classification in Parkinson's disease: a deep learning approach using transformers and error rate metrics</a></h3>
               <p class="pauth"><b>Perrone, B.</b> &middot; Amato, F. &middot; Olmo, G.</p>
-              <p class="pwhy">Accuracy alone does not tell you whether a model has learned pathology or learned the microphone. We paired a transformer pipeline with error-rate metrics that make its decisions inspectable.</p>
+              <p class="pwhy">Speech changes affect most people with Parkinson's disease, and often appear early. We asked whether the mistakes an automatic transcription system makes on a recording can stand in for a clinical severity score, and paired that measure with transformer models trained across three clinical datasets and two languages.</p>
               <div class="chips">
                 <a class="chip k" href="https://doi.org/10.1016/j.bspc.2025.108954" target="_blank" rel="noopener">Read paper</a>
                 <a class="chip" href="https://doi.org/10.1016/j.bspc.2025.108954" target="_blank" rel="noopener">DOI</a>
@@ -152,9 +152,8 @@
               </div>
             </div>
             <div>
-              <!-- TODO: replace .slot with <img src="images/pub-parkinson.png" alt="..."> -->
-              <div class="pfig"><div class="slot"><span>Figure 1<br>drop file here<br>images/pub-parkinson.png</span></div></div>
-              <p class="figcap">Caption goes here</p>
+              <div class="pfig"><a href="images/pub-parkinson.png" target="_blank" rel="noopener" aria-label="Open the study design figure at full size"><img src="images/pub-parkinson.png" alt="Study design: recordings from three clinical datasets split into two branches, sustained vowels feeding transformer classifiers through waveforms and mel-spectrograms, and read speech feeding word and character error rates computed from Whisper transcriptions." width="2342" height="1295" loading="lazy"></a></div>
+              <p class="figcap">Two branches from the same recordings, both tracking clinical severity</p>
             </div>
           </div>
         </article>
@@ -169,7 +168,7 @@
             <div>
               <h3><a href="https://doi.org/10.3390/a19070531" target="_blank" rel="noopener">Full-night comparison of ECG- and PPG-derived measures of cardiac variability for sleep disorder screening</a></h3>
               <p class="pauth">Ciampa, I. &middot; <b>Perrone, B.</b> &middot; et al.</p>
-              <p class="pwhy">Wearables promise sleep screening from the wrist. We ran the comparison across entire nights rather than short windows, and identified where pulse rate variability stops being a safe substitute for heart rate variability.</p>
+              <p class="pwhy">A wrist wearable measures the pulse, not the electrical activity of the heart, and the two are widely assumed to be interchangeable. We compared them over entire nights in fifty people, healthy and with sleep disorders, and worked out which variability measures survive that comparison and which quietly do not.</p>
               <div class="chips">
                 <a class="chip k" href="https://doi.org/10.3390/a19070531" target="_blank" rel="noopener">Read paper</a>
                 <a class="chip" href="https://doi.org/10.3390/a19070531" target="_blank" rel="noopener">DOI</a>
@@ -177,9 +176,8 @@
               </div>
             </div>
             <div>
-              <!-- TODO: replace .slot with <img src="images/pub-sleep.png" alt="..."> -->
-              <div class="pfig"><div class="slot"><span>Figure 2<br>drop file here<br>images/pub-sleep.png</span></div></div>
-              <p class="figcap">Caption goes here</p>
+              <div class="pfig"><a href="images/pub-sleep.png" target="_blank" rel="noopener" aria-label="Open the analysis pipeline figure at full size"><img src="images/pub-sleep.png" alt="Analysis pipeline: polysomnographic ECG and PPG are pre-processed, peaks are detected, heart rate and pulse rate are extracted, and their variability features are compared." width="911" height="442" loading="lazy"></a></div>
+              <p class="figcap">From raw ECG and PPG to a feature-by-feature comparison of the two</p>
             </div>
           </div>
         </article>
@@ -226,38 +224,56 @@
         <h3 class="subh" style="margin-top:2.6rem">Education</h3>
         <div class="tl">
           <div class="card">
-            <h3>Politecnico di Torino &mdash; M.Sc. Biomedical Engineering (eHealth)</h3>
-            <p class="meta">Turin, Italy &middot; Sep 2022 &ndash; Dec 2024</p>
-            <p>Final grade 110/110 <i>cum laude</i> &middot; GPA 29.33/30</p>
+            <img class="cardlogo" src="images/politecnico_di_torino.png" alt="" width="450" height="200" loading="lazy">
+            <div>
+              <h3>M.Sc. Biomedical Engineering (eHealth)</h3>
+              <p class="meta">Politecnico di Torino &middot; Turin, Italy &middot; Sep 2022 to Dec 2024</p>
+              <p>Final grade 110/110 <i>cum laude</i> &middot; GPA 29.33/30</p>
+            </div>
           </div>
           <div class="card">
-            <h3>Trinity College Dublin &mdash; Erasmus Exchange Programme</h3>
-            <p class="meta">Dublin, Ireland &middot; Sep 2023 &ndash; Jan 2024</p>
-            <p>First-class honours in all courses.</p>
+            <img class="cardlogo" src="images/Trinity-Main-Logo.jpg" alt="" width="1713" height="591" loading="lazy">
+            <div>
+              <h3>Erasmus Exchange Programme</h3>
+              <p class="meta">Trinity College Dublin &middot; Dublin, Ireland &middot; Sep 2023 to Jan 2024</p>
+              <p>First-class honours in all courses.</p>
+            </div>
           </div>
           <div class="card">
-            <h3>Politecnico di Torino &mdash; B.Sc. Biomedical Engineering</h3>
-            <p class="meta">Turin, Italy &middot; Sep 2019 &ndash; Jul 2022</p>
-            <p>Final grade 110/110 <i>cum laude</i> &middot; GPA 28.29/30</p>
+            <img class="cardlogo" src="images/politecnico_di_torino.png" alt="" width="450" height="200" loading="lazy">
+            <div>
+              <h3>B.Sc. Biomedical Engineering</h3>
+              <p class="meta">Politecnico di Torino &middot; Turin, Italy &middot; Sep 2019 to Jul 2022</p>
+              <p>Final grade 110/110 <i>cum laude</i> &middot; GPA 28.29/30</p>
+            </div>
           </div>
         </div>
 
         <h3 class="subh">Experience</h3>
         <div class="tl">
           <div class="card">
-            <h3>KU Leuven (ESAT / STADIUS) &mdash; PhD Researcher</h3>
-            <p class="meta">Leuven, Belgium &middot; Nov 2025 &ndash; present</p>
-            <p>Calibration-free EEG-based brain&ndash;computer interfaces for attention decoding in naturalistic auditory scenarios.</p>
+            <img class="cardlogo" src="images/kuleuven.png" alt="" width="600" height="300" loading="lazy">
+            <div>
+              <h3>PhD Researcher</h3>
+              <p class="meta">KU Leuven (ESAT / STADIUS) &middot; Leuven, Belgium &middot; since Nov 2025</p>
+              <p>Calibration-free EEG-based brain-computer interfaces for attention decoding in naturalistic auditory scenarios.</p>
+            </div>
           </div>
           <div class="card">
-            <h3>Politecnico di Torino &mdash; Postgraduate Research Fellow</h3>
-            <p class="meta">Turin, Italy &middot; Nov 2024 &ndash; Nov 2025</p>
-            <p>Development and validation of algorithms for automated sleep disorder assessment from polysomnography.</p>
+            <img class="cardlogo" src="images/politecnico_di_torino.png" alt="" width="450" height="200" loading="lazy">
+            <div>
+              <h3>Postgraduate Research Fellow</h3>
+              <p class="meta">Politecnico di Torino &middot; Turin, Italy &middot; Nov 2024 to Nov 2025</p>
+              <p>Development and validation of algorithms for automated sleep disorder assessment from polysomnography.</p>
+            </div>
           </div>
           <div class="card">
-            <h3>Politecnico di Torino &mdash; Research Internship</h3>
-            <p class="meta">Turin, Italy &middot; Mar 2022 &ndash; Jun 2022</p>
-            <p>Computational models of molecular networks in an interdisciplinary project.</p>
+            <img class="cardlogo" src="images/politecnico_di_torino.png" alt="" width="450" height="200" loading="lazy">
+            <div>
+              <h3>Research Internship</h3>
+              <p class="meta">Politecnico di Torino &middot; Turin, Italy &middot; Mar 2022 to Jun 2022</p>
+              <p>Computational models of molecular networks in an interdisciplinary project.</p>
+            </div>
           </div>
         </div>
 
@@ -277,17 +293,17 @@
           <a class="bcard" href="beyond.html#music">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             <h3>Music</h3>
-            <p>What I listen to, and what changes when you study how the brain follows a single voice through noise.</p>
+            <p>What I listen to, and what changes when you study how the brain follows one voice through noise.</p>
           </a>
           <a class="bcard" href="beyond.html#outreach">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
             <h3>Outreach</h3>
-            <p>Mentoring with WeAreHERe and IEEE-HKN at Politecnico di Torino: workshops, seminars, and encouraging women into engineering.</p>
+            <p>Mentoring with WeAreHERe and IEEE-HKN at Politecnico di Torino.</p>
           </a>
           <a class="bcard" href="beyond.html#photos">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
             <h3>Photos</h3>
-            <p>Turin, Dublin and Leuven: three cities I have lived and worked in, shot on the walks between the lab and home.</p>
+            <p>Turin, Dublin and Leuven, shot on the walks between the lab and home.</p>
           </a>
         </div>
       </div>
