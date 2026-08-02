@@ -1,154 +1,198 @@
-# Benedetta Perrone — portfolio
+# Benedetta Perrone, portfolio
 
-Sito personale statico: HTML, CSS e un file JavaScript. Nessuna build, nessuna
-dipendenza da installare. Si pubblica su GitHub Pages così com'è.
+Static personal site: HTML, CSS and one JavaScript file. No build step, no
+dependencies to install. It publishes to GitHub Pages as it is.
 
 ---
 
-## Come vedere il sito
+## Running it
 
-**In locale**: doppio clic su `index.html`. Si apre nel browser e funziona tutto,
-compreso il menu mobile (i percorsi sono tutti relativi).
+**Locally**: double-click `index.html`. It opens in the browser and everything
+works, mobile menu included, because every path is relative.
 
-Se vuoi un server locale (utile solo per testare i social preview):
+If you want a local server (only needed to test social previews):
 
 ```bash
 python -m http.server 8000
-# poi apri http://localhost:8000
+# then open http://localhost:8000
 ```
 
-**Online**: GitHub Pages, da *Settings → Pages → Source: main branch, / (root)*.
+**Online**: GitHub Pages, from *Settings → Pages → Source: main branch, / (root)*.
 
 ---
 
-## Struttura
+## Structure
 
-| File | Cosa contiene |
+| File | What it holds |
 |---|---|
 | `index.html` | Home: hero, About me, Publications, Projects, Background, Beyond, Contact |
-| `publications.html` | Elenco completo di articoli e tesi |
-| `cv.html` | Pagina **Background**: Education ed Experience richiudibili, Leadership, Honours, Skills, Languages + download PDF |
-| `beyond.html` | Music, Outreach, Photos |
-| `styles.css` | Tutti gli stili, condivisi dalle quattro pagine |
-| `site.js` | Menu mobile e anno nel footer |
-| `images/` | Foto |
+| `publications.html` | Full list: journal articles, workshop paper, theses |
+| `cv.html` | The **Background** page: five collapsible sections, all open by default, plus the PDF download |
+| `beyond.html` | Outreach and mentoring. The Music and Three cities sections exist in the file but are commented out until their content is written |
+| `styles.css` | Every style, shared by the four pages |
+| `site.js` | Mobile menu, figure lightbox, back-to-top button, footer year |
+| `images/` | Portrait, paper figures, institution logos, galleries |
 | `cv/` | `CV_BenedettaPerrone.pdf` |
 
-### A cosa serve `site.js`
+### What `site.js` does
 
-Trentacinque righe, due cose:
+Four things, all progressive enhancement. The site stays readable and navigable
+with JavaScript off; you lose the mobile menu, and the figures open as plain
+image files instead of in the lightbox.
 
-1. **Menu mobile.** Sotto i 960px il menu diventa un pannello a tendina. Il JS
-   apre e chiude il pannello al clic sull'hamburger, aggiorna `aria-expanded`
-   per gli screen reader, chiude il pannello dopo aver toccato un link e lo
-   chiude con il tasto Esc.
-2. **Anno nel footer.** Scrive l'anno corrente, così il copyright non invecchia.
-
-Il sito resta leggibile e navigabile anche con JavaScript disattivato: si perde
-solo l'apertura del menu su mobile.
+1. **Mobile menu.** Below 960px the nav becomes a drop-down panel. The script
+   opens and closes it, keeps `aria-expanded` correct for screen readers, closes
+   it after a link is tapped, and closes it on Esc.
+2. **Figure lightbox.** Clicking a paper figure opens it large over the blurred
+   page. Closes on the X, on Esc, or on a click outside the figure. Page scroll
+   is locked while it is open and focus returns to the figure on close. It is
+   built on top of a plain `<a href="image">`, so without JavaScript the link
+   still opens the file.
+3. **Back to top.** A round button appears bottom right after 500px of scroll.
+   Injected from the script rather than repeated in four HTML files.
+4. **Footer year.** Writes the current year so the copyright does not age.
 
 ---
 
-## Navigazione
-
-Quattro voci, tutte pagine:
+## Navigation
 
 ```
-Benedetta Perrone      HOME  PUBLICATIONS  BACKGROUND  BEYOND  │  icone social
+Benedetta Perrone    HOME  PUBLICATIONS  BACKGROUND  BEYOND  CONTACT  │  social icons
 ```
 
-Tutte le voci puntano a pagine intere: nessuna ancora, così non c'è ambiguità
-fra "ti sposto di pagina" e "ti faccio scorrere". La voce attiva è sottolineata
-in verde tramite la classe `.on`. Anche il nome in alto a sinistra porta alla
-home.
+The first four are whole pages. **Contact** is the one anchor: it points at
+`#contact`, the block that closes every page, so it behaves the same wherever you
+click it. The active page is underlined in green through the `.on` class. The
+name top left also goes home.
 
-La pagina si chiama `cv.html` sul disco, ma nel menu si chiama **Background**:
-"CV" è riservato al PDF scaricabile.
+The file is called `cv.html` on disk but the menu says **Background**: "CV" is
+reserved for the downloadable PDF.
 
 ---
 
 ## Design
 
-- **Colori**: carta calda `#faf8f3`, verde bosco `#1f5c46`, verde profondo
-  `#0e3b2e`, salvia `#8ea08e`. Tutti in variabili CSS in cima a `styles.css`,
-  quindi si cambia la palette in un punto solo.
-- **Font**: [Fraunces](https://fonts.google.com/specimen/Fraunces) per i titoli,
-  [Inter](https://fonts.google.com/specimen/Inter) per il testo. Caricati da
-  Google Fonts.
-- **Titoli di sezione senza punto finale.**
-- **Blocco contatti compatto**: email e indirizzo su una riga sola, ciascuno con
-  la propria icona (busta e segnaposto), senza il titolone della mail.
-- **Niente trattini lunghi nei testi discorsivi**: restano solo come separatore
-  tipografico nelle intestazioni (`Politecnico di Torino — M.Sc. ...`).
+- **Colours**: warm paper `#faf8f3`, secondary paper `#f2efe7`, forest green
+  `#1f5c46`, deep green `#0e3b2e`, sage `#8ea08e`. All CSS variables at the top
+  of `styles.css`, so the palette changes in one place.
+- **Fonts**: [Fraunces](https://fonts.google.com/specimen/Fraunces) for display,
+  [Inter](https://fonts.google.com/specimen/Inter) for text, from Google Fonts.
+- **Section titles carry no full stop.**
+- **No long dashes anywhere in the visible text.** Not in prose, not in headings,
+  not in date ranges. Em and en dashes were removed throughout: headings use a
+  comma or move the institution into the meta line, date ranges read
+  "Sep 2022 to Dec 2024" or "since Nov 2025". If you add copy, keep to this.
+- **A section label is never repeated as its own heading.** The side label says
+  "About", so the heading does not also say "About me"; on the CV page the
+  Education section is headed "Degrees and exchanges", not "Education".
+- **Institution logos live inside the timeline cards**, greyscale at rest and in
+  colour on hover, rather than in a separate badge row. They use
+  `mix-blend-mode: multiply` so the white background baked into the Trinity JPEG
+  disappears against the card.
+- **Contact and footer share one tone** (`--paper-2`) so they read as a single
+  closing block instead of a stray strip under the dark Beyond band.
+- **Nothing half written is visible.** Sections whose text or photos do not
+  exist yet are commented out of the HTML rather than shipped as placeholder
+  copy and hatched grey boxes. The markup stays in the file, wrapped in a
+  comment that says what to write and what to uncomment alongside it.
 
 ### Responsive
 
-Verificato senza overflow orizzontale su tutte e quattro le pagine a 320, 375,
-768, 1024 e 1440px.
+No horizontal overflow at 375 or 1440px on any of the four pages.
 
-- sotto **960px**: hero, sezioni e griglie passano a colonna singola, il menu
-  diventa a tendina;
-- sotto **560px**: la galleria fotografica va a una colonna;
-- sotto **400px**: le icone social spariscono dall'header, perché non ci stanno
-  insieme a nome e hamburger. Restano nell'hero della home.
+- below **960px**: hero, sections and grids go single column, the menu becomes a
+  drop-down;
+- below **560px**: the photo gallery goes to one column, the logo column inside
+  timeline cards narrows from 76px to 52px, the back-to-top button shrinks;
+- below **400px**: the social icons leave the header, because they do not fit
+  next to the name and the hamburger. They stay in the hero on the home page.
 
 ---
 
-## Cosa manca
+## What is still missing
 
-Cerca `TODO` nei file HTML: i punti da riempire sono marcati lì.
+Every gap is marked in the code with a `TODO [CONTENT]` comment explaining what
+to write and where. To list them:
 
-### Immagini da aggiungere in `images/`
+```bash
+grep -rn "TODO \[CONTENT\]" *.html
+```
 
-| File | Dove va |
+Nothing on that list is visible on the live site. Each gap is commented out, so
+the site reads as finished; uncommenting is the last step of filling each one.
+
+### Hidden until written
+
+| Where | What is needed | Uncomment alongside |
+|---|---|---|
+| `beyond.html`, Music section | Two short paragraphs: what you listen to, and the link to studying how the brain follows one voice through noise | the Music card in the `.bgrid` in `index.html` |
+| `beyond.html`, Three cities section | Three photos plus a one-line intro | the Photos card in the `.bgrid` in `index.html` |
+| `beyond.html`, Outreach gallery | Three photos and their captions | nothing, it sits inside a section that is already live |
+
+Two knock-on edits are noted in the comments and worth repeating here: the
+`.sub` line under "Outside the lab" in `index.html` was narrowed to outreach
+only, and the `<meta name="description">` in `beyond.html` likewise. Both widen
+back when the other sections return.
+
+### Images to add to `images/`
+
+| File | Where it goes |
 |---|---|
-| `pub-parkinson.png` | figura del paper Parkinson, in `index.html` e `publications.html` |
-| `pub-sleep.png` | figura del paper sonno, in `index.html` e `publications.html` |
-| `outreach-1.jpg` `outreach-2.jpg` `outreach-3.jpg` | galleria Outreach in `beyond.html` |
-| `city-turin.jpg` `city-dublin.jpg` `city-leuven.jpg` | galleria Photos in `beyond.html` |
+| `outreach-1.jpg` `outreach-2.jpg` `outreach-3.jpg` | Outreach gallery in `beyond.html` |
+| `city-turin.jpg` `city-dublin.jpg` `city-leuven.jpg` | Three cities gallery in `beyond.html` |
 
-Finché mancano, al loro posto c'è un riquadro tratteggiato che indica il nome
-del file atteso. Per inserirne una, sostituisci il blocco:
+Inside the commented markup each photo is a hatched box naming the file it
+expects. To insert one, replace:
 
 ```html
-<div class="pfig"><div class="slot"><span>Figure 1<br>...</span></div></div>
+<div class="slot"><span>Photo<br>images/outreach-1.jpg</span></div>
 ```
 
-con:
+with:
 
 ```html
-<div class="pfig"><img src="images/pub-parkinson.png" alt="descrizione"></div>
+<img src="images/outreach-1.jpg" alt="what is happening in the photo"
+     width="1200" height="1600" loading="lazy">
 ```
 
-e scrivi la didascalia in `<p class="figcap">`.
+using the file's real pixel dimensions, and write the caption in `<figcaption>`.
+Gallery images are cropped to 3:4 portrait, so vertical shots survive best.
 
-> **Copyright delle figure.** *Algorithms* (MDPI) è CC-BY: la figura si può
-> ripubblicare citando la fonte. *Biomedical Signal Processing and Control*
-> (Elsevier) non lo è, salvo open access pagato. In quel caso usa la versione
-> author-accepted o rigenera il grafico dai tuoi dati.
+The two paper figures are done: `pub-parkinson.png` and `pub-sleep.png` are in
+place on both `index.html` and `publications.html`, with alt text and captions,
+and both open in the lightbox.
 
-### Testi da scrivere
+> **Figure copyright.** *Algorithms* (MDPI) is CC-BY, so its figure can be
+> republished with attribution. *Biomedical Signal Processing and Control*
+> (Elsevier) is published open access under CC-BY on this article, which is why
+> its figure is here too. Check the licence before adding a figure from anywhere
+> else.
 
-- **Music** in `beyond.html`: al momento è un segnaposto dichiarato.
-- **Didascalie** delle figure e delle foto.
+### Optional additions
 
-### Link mancanti
-
-- **ORCID.** Nella prima versione avevo messo l'icona ORCID accanto a Scholar,
-  LinkedIn, GitHub ed email, ma non avendo il tuo identificativo l'unica
-  alternativa era un link finto, quindi l'ho tolta. Le icone attualmente
-  presenti sono quattro: **Google Scholar, LinkedIn, GitHub, email**. Per
-  rimettere ORCID serve l'URL nella forma `https://orcid.org/0000-0000-0000-0000`,
-  da aggiungere in tutti e quattro i file HTML (blocco `.socials` nell'header,
-  più `.herosoc` in `index.html`) e nell'array `sameAs` del JSON-LD.
-- **PDF della tesi magistrale** in `publications.html`, se vuoi linkarlo.
+- **Talks and presentations** in `publications.html`. There is none yet, so the
+  page `<h1>` reads "Articles and theses" rather than promising talks it does
+  not have. Widen it back when the section exists; there is a `TODO [CONTENT]`
+  where the block goes.
+- **M.Sc. thesis PDF** in `publications.html`. Only the code repository is
+  linked; the thesis itself has no chip.
+- **ORCID.** The header currently carries four icons: Google Scholar, LinkedIn,
+  GitHub, email. ORCID was dropped rather than linked to a made-up identifier.
+  To add it you need the URL in the form
+  `https://orcid.org/0000-0000-0000-0000`, added to the `.socials` block in all
+  four HTML files, to `.herosoc` in `index.html`, and to the `sameAs` array in
+  the JSON-LD.
 
 ---
 
-## Note
+## Notes
 
-- Il **tema scuro** della versione precedente non c'è più: la palette carta
-  calda non ha un equivalente scuro immediato e andrebbe progettata a parte.
-- I dati strutturati **JSON-LD** in `index.html` (schema.org `Person`) aiutano
-  Google a capire chi sei: vanno tenuti allineati se cambi affiliazione o
-  profili.
+- **No dark theme.** The warm paper palette has no obvious dark counterpart; it
+  would need designing rather than inverting.
+- The **JSON-LD** block in `index.html` (schema.org `Person`) is what tells
+  Google who you are. Keep it in step with reality if the affiliation or the
+  profile links change.
+- The **logo column** in the timeline cards only appears on cards that carry a
+  logo, through `:has(.cardlogo)`. Leadership and Awards on the CV page have no
+  logo file and keep the plain single-column card, which is why the rule is
+  written that way rather than applied to every `.tl .card`.
