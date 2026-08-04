@@ -14,7 +14,7 @@
   --muted:#5f6b64;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:103%}
 body{background:var(--paper);color:var(--ink);font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
 .wrap{width:min(1180px,90%);margin:0 auto}
 a{color:inherit}
