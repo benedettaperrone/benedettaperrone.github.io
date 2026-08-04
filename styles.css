@@ -114,6 +114,9 @@ section.beyond > .wrap::before{display:none}
 /* Without a side label the 190px track would just be a hole in the layout. */
 .sec.nolabel{grid-template-columns:1fr;gap:0}
 .sec > .label{color:var(--sage);padding-top:.5rem}
+.page-beyond .pagehead p{font-size:1.08rem}
+.page-beyond .bio{font-size:.98rem;line-height:1.8}
+.page-beyond .lead{font-size:clamp(1.7rem,2.8vw,2.35rem)}
 .lead{font-family:Fraunces,Georgia,serif;font-weight:300;font-size:clamp(1.55rem,2.6vw,2.2rem);line-height:1.24;letter-spacing:-.022em;max-width:24ch}
 
 /* ---------- publications ---------- */
@@ -211,8 +214,8 @@ body.lboxopen{overflow:hidden}
 /* Only cards that carry a logo get the two-column layout: Leadership and Awards
    on the CV page have no logo file and keep the plain single-column card.
    multiply drops the white box the Trinity JPEG carries onto the card. */
-.tl .card:has(.cardlogo){display:grid;grid-template-columns:76px 1fr;gap:1.15rem;align-items:start}
-.cardlogo{width:100%;height:auto;max-height:38px;object-fit:contain;object-position:left top;
+.tl .card:has(.cardlogo){display:grid;grid-template-columns:76px 1fr;gap:1.15rem;align-items:center}
+.cardlogo{width:100%;height:auto;max-height:38px;object-fit:contain;object-position:left center;
   margin-top:.2rem;mix-blend-mode:multiply;filter:grayscale(1);opacity:.55;
   transition:filter .25s,opacity .25s}
 .tl .card:hover .cardlogo{filter:none;opacity:1}
