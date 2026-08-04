@@ -215,13 +215,8 @@ body.lboxopen{overflow:hidden}
 /* Only cards that carry a logo get the two-column layout: Leadership and Awards
    on the CV page have no logo file and keep the plain single-column card.
    multiply drops the white box the Trinity JPEG carries onto the card. */
-<<<<<<< HEAD
 .tl .card:has(.cardlogo){display:grid;grid-template-columns:84px 1fr;gap:1.15rem;align-items:center}
 .cardlogo{width:100%;height:auto;max-height:40px;object-fit:contain;object-position:left center;
-=======
-.tl .card:has(.cardlogo){display:grid;grid-template-columns:76px 1fr;gap:1.15rem;align-items:center}
-.cardlogo{width:100%;height:auto;max-height:38px;object-fit:contain;object-position:left center;
->>>>>>> origin/main
   margin-top:.2rem;mix-blend-mode:multiply;filter:grayscale(1);opacity:.55;
   transition:filter .25s,opacity .25s}
 .tl .card:hover .cardlogo{filter:none;opacity:1}
@@ -348,8 +343,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;padding:1.5rem 
   .logos .l-tcd{height:40px}
   .totop{right:1rem;bottom:1rem;width:40px;height:40px}
   /* 76px is a third of a 375px card: too much of the row for a decorative mark. */
+<<<<<<< HEAD
   .tl .card:has(.cardlogo){grid-template-columns:56px 1fr;gap:.85rem}
   .cardlogo{max-height:30px}
+=======
+  .tl .card:has(.cardlogo){grid-template-columns:60px 1fr;gap:.9rem}
+  .cardlogo{max-height:32px}
+>>>>>>> origin/main
 }
 
 @media(max-width:400px){
