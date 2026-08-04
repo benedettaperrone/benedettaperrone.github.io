@@ -159,8 +159,8 @@ using the file's real pixel dimensions, and write the caption in `<figcaption>`.
 Gallery images are cropped to 3:4 portrait, so vertical shots survive best.
 
 The two paper figures are done: `pub-parkinson.png` and `pub-sleep.png` are in
-place on both `index.html` and `publications.html`, with alt text and captions,
-and both open in the lightbox.
+place on both `index.html` and `publications.html`. Figure captions were removed,
+and both images open in the lightbox.
 
 > **Figure copyright.** *Algorithms* (MDPI) is CC-BY, so its figure can be
 > republished with attribution. *Biomedical Signal Processing and Control*
@@ -193,6 +193,7 @@ and both open in the lightbox.
   Google who you are. Keep it in step with reality if the affiliation or the
   profile links change.
 - The **logo column** in the timeline cards only appears on cards that carry a
-  logo, through `:has(.cardlogo)`. Leadership and Awards on the CV page have no
-  logo file and keep the plain single-column card, which is why the rule is
-  written that way rather than applied to every `.tl .card`.
+  logo, through `:has(.cardlogo)`. Logos are left-aligned and vertically centered
+  relative to the text block.
+- **Tracking and indexing** are enabled with GA4 (`G-70KGV6CNRB`), `robots.txt`,
+  and `sitemap.xml` for Search Console submission.
