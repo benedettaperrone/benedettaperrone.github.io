@@ -217,7 +217,7 @@ body.lboxopen{overflow:hidden}
    multiply drops the white box the Trinity JPEG carries onto the card. */
 <<<<<<< HEAD
 .tl .card:has(.cardlogo){display:grid;grid-template-columns:88px 1fr;gap:1.2rem;align-items:center}
-.cardlogo{width:100%;height:auto;max-height:44px;object-fit:contain;object-position:center;
+.cardlogo{width:100%;height:auto;max-height:44px;object-fit:contain;object-position:left center;
 =======
 .tl .card:has(.cardlogo){display:grid;grid-template-columns:76px 1fr;gap:1.15rem;align-items:center}
 .cardlogo{width:100%;height:auto;max-height:38px;object-fit:contain;object-position:left center;
@@ -262,7 +262,7 @@ body.lboxopen{overflow:hidden}
 .bgrid:has(.bcard:only-child){max-width:420px}
 .bcard{background:var(--green-deep);padding:1.1rem 1.15rem;text-decoration:none;display:flex;flex-direction:column;transition:.2s}
 .bcard:hover{background:#0a2c22}
-.bcard svg{width:16px;height:16px;stroke:var(--sage);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.bcard svg{width:16px;height:16px;min-width:16px;max-width:16px;min-height:16px;max-height:16px;stroke:var(--sage);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:0 0 16px}
 .bcard h3{font-family:Fraunces,serif;font-weight:400;font-size:.98rem;margin:.7rem 0 .3rem}
 .bcard p{font-size:.78rem;line-height:1.55;color:rgba(250,248,243,.55);margin-bottom:auto}
 
