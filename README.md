@@ -30,15 +30,16 @@ python -m http.server 8000
 | `cv.html` | The **Background** page: five collapsible sections, all open by default, plus the PDF download |
 | `beyond.html` | Outreach and mentoring. The Music and Three cities sections exist in the file but are commented out until their content is written |
 | `styles.css` | Every style, shared by the four pages |
-| `site.js` | Mobile menu, figure lightbox, back-to-top button, footer year |
+| `site.js` | Mobile menu, figure lightbox, email panel, reveal on scroll, reading progress, scroll spy, back-to-top button, footer year |
 | `images/` | Portrait, paper figures, institution logos, galleries |
 | `cv/` | `CV_BenedettaPerrone.pdf` |
 
 ### What `site.js` does
 
-Four things, all progressive enhancement. The site stays readable and navigable
-with JavaScript off; you lose the mobile menu, and the figures open as plain
-image files instead of in the lightbox.
+Seven things, all progressive enhancement. The site stays readable and
+navigable with JavaScript off: you lose the mobile menu, nothing fades in, the
+figures open as plain image files instead of in the lightbox, and the email
+links fall back to the plain `mailto:` they already are.
 
 1. **Mobile menu.** Below 960px the nav becomes a drop-down panel. The script
    opens and closes it, keeps `aria-expanded` correct for screen readers, closes
@@ -48,9 +49,29 @@ image files instead of in the lightbox.
    is locked while it is open and focus returns to the figure on close. It is
    built on top of a plain `<a href="image">`, so without JavaScript the link
    still opens the file.
-3. **Back to top.** A round button appears bottom right after 500px of scroll.
+3. **Email panel.** A bare `mailto:` does nothing at all on a machine with no
+   mail client registered, which is most of them: the click is swallowed and the
+   visitor gets no feedback. Every `mailto:` link on the page, in the header, the
+   hero and the contact block, opens a small panel instead: the address with a
+   copy button, Gmail and Outlook compose links, and the original `mailto:` for
+   whoever does have a desktop client. Closes on the X, on Esc, or on a click
+   outside; Tab stays inside it; focus returns to the icon on close.
+   Ctrl-clicking a mail icon still gets the browser's own behaviour.
+4. **Reveal on scroll.** Section blocks fade up as they come into view, once
+   each. The hidden state is applied from the script, never written into the
+   HTML, so without JavaScript nothing is ever hidden. Skipped entirely under
+   `prefers-reduced-motion`.
+5. **Reading progress.** A 2px green bar on the bottom edge of the sticky
+   header, tracking how far down the document you are.
+6. **Scroll spy.** The green underline in the nav follows the section you are
+   reading. Sections say which link they belong to through `data-nav`, holding
+   that link's own `href`. Projects deliberately has none: leaving it out keeps
+   the indicator moving in one direction instead of flicking back to Home in
+   the middle of the page. With no section in view the underline returns to the
+   link marked `.on` in the HTML, which is the current page.
+7. **Back to top.** A round button appears bottom right after 500px of scroll.
    Injected from the script rather than repeated in four HTML files.
-4. **Footer year.** Writes the current year so the copyright does not age.
+8. **Footer year.** Writes the current year so the copyright does not age.
 
 ---
 
@@ -62,8 +83,10 @@ Benedetta Perrone    HOME  PUBLICATIONS  BACKGROUND  BEYOND  CONTACT  │  socia
 
 The first four are whole pages. **Contact** is the one anchor: it points at
 `#contact`, the block that closes every page, so it behaves the same wherever you
-click it. The active page is underlined in green through the `.on` class. The
-name top left also goes home.
+click it. The green underline is the `.on` class, and it does double duty: it
+marks the current page, and on scroll it follows the section you are reading
+(see "Scroll spy" above). The name top left also goes home, and is set in green
+rather than ink: it is the one piece of branding in the header.
 
 The file is called `cv.html` on disk but the menu says **Background**: "CV" is
 reserved for the downloadable PDF.
@@ -75,6 +98,14 @@ reserved for the downloadable PDF.
 - **Colours**: warm paper `#faf8f3`, secondary paper `#f2efe7`, forest green
   `#1f5c46`, deep green `#0e3b2e`, sage `#8ea08e`. All CSS variables at the top
   of `styles.css`, so the palette changes in one place.
+- **Green carries the page, sage stays out of the way.** Green is on the name in
+  the header, the hero and page headings, the portrait frame, the publication
+  numbers, the timeline spine, the buttons and the reading progress bar. Sage
+  keeps the quiet parts: side labels, meta lines, captions. If you add an accent,
+  decide which of the two jobs it is doing before picking the colour.
+- **The portrait is framed, not outlined**: a paper gap, then a solid green rule
+  around it. The gap is what makes it read as a mount inside a frame rather than
+  a border drawn on the photograph.
 - **Fonts**: [Fraunces](https://fonts.google.com/specimen/Fraunces) for display,
   [Inter](https://fonts.google.com/specimen/Inter) for text, from Google Fonts.
 - **Section titles carry no full stop.**
@@ -187,8 +218,12 @@ and both images open in the lightbox.
 
 ## Notes
 
-- **No dark theme.** The warm paper palette has no obvious dark counterpart; it
-  would need designing rather than inverting.
+- **No dark theme, on purpose.** Not a gap waiting to be filled: the warm paper
+  palette is the identity of the site, and offering a second skin would mean
+  publishing a look nobody chose. One theme, done properly.
+  A dark theme was built and then removed, so nothing in `styles.css` is left
+  half prepared for one. If it ever comes back it starts from the palette again,
+  not from leftovers.
 - The **JSON-LD** block in `index.html` (schema.org `Person`) is what tells
   Google who you are. Keep it in step with reality if the affiliation or the
   profile links change.

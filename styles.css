@@ -29,7 +29,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offs
 /* ---------- header ---------- */
 header{position:sticky;top:0;z-index:20;background:rgba(250,248,243,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
 .nav{display:flex;align-items:center;gap:1.8rem;height:70px}
-.mark{font-family:Fraunces,serif;font-weight:500;font-size:1.05rem;letter-spacing:-.01em;text-decoration:none;margin-right:auto}
+/* Green rather than ink: the name is the one piece of branding in the header,
+   and it now answers the green h1 in the hero below it. */
+.mark{font-family:Fraunces,serif;font-weight:500;font-size:1.05rem;letter-spacing:-.01em;text-decoration:none;margin-right:auto;color:var(--green)}
 .navmenu{display:flex;align-items:center;gap:1.55rem}
 .navgroup{display:flex;gap:1.55rem;list-style:none}
 .navsplit{width:1px;height:20px;background:var(--rule)}
@@ -40,6 +42,12 @@ header{position:sticky;top:0;z-index:20;background:rgba(250,248,243,.9);backdrop
 .socials a{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--muted);transition:.16s}
 .socials a:hover{background:var(--green);color:#fff}
 .socials svg{width:15px;height:15px;fill:currentColor}
+
+/* Reading progress. Rides the bottom edge of the sticky header, so it reads as
+   part of the rule under it rather than a second bar competing with it.
+   scaleX rather than width: it runs on the compositor and never reflows. */
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--green);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
 
 .navtoggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;
   border:1px solid var(--rule);border-radius:2px;background:transparent;cursor:pointer}
@@ -59,8 +67,11 @@ header{position:sticky;top:0;z-index:20;background:rgba(250,248,243,.9);backdrop
 .affil{font-size:.95rem;color:var(--muted);line-height:1.65;max-width:50ch}
 /* height:auto is required — without it the img's height attribute wins and
    aspect-ratio is ignored, which stretches the portrait into a strip. */
+/* Framed rather than outlined: a paper gap, then a solid green rule around it.
+   The gap is what makes it read as a mount inside a frame instead of a border
+   drawn on the photograph. */
 .portrait img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 25%;display:block;border-radius:3px;
-  box-shadow:0 0 0 7px var(--paper),0 0 0 8px rgba(31,92,70,.28),0 22px 48px -14px rgba(31,92,70,.42)}
+  box-shadow:0 0 0 8px var(--paper),0 0 0 10px var(--green),0 24px 50px -16px rgba(31,92,70,.45)}
 .herosoc{display:flex;gap:.6rem;margin-top:2.2rem;flex-wrap:wrap}
 .herosoc a{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--rule);border-radius:2px;color:var(--muted);transition:.16s}
 .herosoc a:hover{background:var(--green);border-color:var(--green);color:var(--paper)}
@@ -126,7 +137,7 @@ section.beyond > .wrap::before{display:none}
 .pubs .head .note{color:var(--muted);font-size:.96rem;line-height:1.7;max-width:48ch;margin-top:1.1rem}
 .plist{border-top:1px solid var(--rule)}
 .pitem{display:grid;grid-template-columns:190px 1fr;gap:4rem;padding:3rem 0;border-bottom:1px solid var(--rule);transition:transform .18s ease,background .18s ease}
-.pside .pnum{font-family:Fraunces,serif;font-weight:300;font-size:2.9rem;line-height:1;color:var(--sage);opacity:.55;display:block;margin-bottom:.9rem}
+.pside .pnum{font-family:Fraunces,serif;font-weight:300;font-size:2.9rem;line-height:1;color:var(--green);opacity:.34;display:block;margin-bottom:.9rem}
 .pside .pyear{font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--green);display:block}
 .pside .pven{font-size:.82rem;color:var(--muted);margin-top:.35rem;display:block;line-height:1.45}
 /* Figure column is wider than the text needs, deliberately: these are dense
@@ -178,6 +189,43 @@ section.beyond > .wrap::before{display:none}
 .lbox .lclose:hover{background:var(--green);border-color:var(--green);color:var(--paper)}
 .lbox .lclose svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 body.lboxopen{overflow:hidden}
+/* ---------- email panel ---------- */
+/* Shares the lightbox backdrop so the two modals read as one mechanism.
+   Opened by site.js from any mailto: link: a bare mailto does nothing at all
+   on a machine with no mail client registered, which is most of them. */
+.mbox{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:clamp(1rem,4vw,3rem);
+  background:rgba(242,239,231,.72);backdrop-filter:blur(16px) saturate(.9);-webkit-backdrop-filter:blur(16px) saturate(.9);
+  opacity:0;transition:opacity .22s}
+.mbox.on{opacity:1}
+.mpanel{position:relative;width:min(460px,100%);background:#fff;border:1px solid var(--rule);border-radius:3px;
+  padding:2.1rem 2.1rem 1.9rem;box-shadow:0 30px 70px -24px rgba(18,36,29,.5);
+  transform:translateY(10px) scale(.98);transition:transform .22s}
+.mbox.on .mpanel{transform:none}
+.mpanel > .label{color:var(--sage);display:block;margin-bottom:.9rem}
+.mpanel h2{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:1.5rem;letter-spacing:-.02em;
+  line-height:1.2;color:var(--green);margin-bottom:.6rem}
+.mpanel .mnote{font-size:.87rem;line-height:1.6;color:var(--muted);margin-bottom:1.5rem}
+/* The address is the point of the panel, so it gets a field of its own rather
+   than sitting inline in the paragraph above. */
+.maddr{display:flex;align-items:stretch;border:1px solid var(--rule);border-radius:2px;background:var(--paper);
+  margin-bottom:1.4rem;overflow:hidden}
+.maddr span{flex:1;min-width:0;padding:.7rem .85rem;font-size:.83rem;line-height:1.5;color:var(--ink);
+  align-self:center;word-break:break-all;-webkit-user-select:all;user-select:all}
+.mcopy{flex-shrink:0;border:none;border-left:1px solid var(--rule);background:transparent;cursor:pointer;
+  font-family:inherit;font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);padding:0 1rem;transition:.16s}
+.mcopy:hover{background:var(--green);color:var(--paper)}
+.mcopy.ok{background:var(--green);color:var(--paper)}
+.mopts{display:flex;flex-direction:column;gap:.55rem}
+.mopts .btn{text-align:center}
+.mbox .lclose{position:absolute;top:.7rem;right:.7rem;width:34px;height:34px;display:grid;place-items:center;
+  border:1px solid transparent;border-radius:50%;background:transparent;color:var(--sage);cursor:pointer;transition:.16s}
+.mbox .lclose:hover{background:var(--paper-2);border-color:var(--rule);color:var(--green)}
+.mbox .lclose svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+@media(max-width:560px){
+  .mpanel{padding:1.8rem 1.4rem 1.5rem}
+}
+
 .pfig .slot{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#f6f4ee,#f6f4ee 9px,#f0ede4 9px,#f0ede4 18px);display:grid;place-items:center;text-align:center;padding:1rem}
 .pfig .slot span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);line-height:1.8}
 .figcap{margin-top:.65rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);line-height:1.6}
@@ -201,7 +249,10 @@ body.lboxopen{overflow:hidden}
 .secmore a:hover{border-color:var(--green)}
 
 /* ---------- timeline (education / experience / leadership / honors) ---------- */
-.tl{margin-top:2.4rem;position:relative;padding-left:1.6rem;border-left:1px solid var(--rule)}
+/* The spine is green, not neutral: it is the one line that runs the whole
+   length of a section, so it carries the colour further down the page than any
+   single accent could. */
+.tl{margin-top:2.4rem;position:relative;padding-left:1.6rem;border-left:1px solid rgba(31,92,70,.22)}
 .tl .card{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:1.15rem 1.3rem;margin-bottom:1rem;position:relative;transition:.16s}
 .tl .card:hover{border-color:var(--sage)}
 .tl .card::before{content:"";position:absolute;top:1.5rem;left:-2.12rem;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid var(--paper)}
@@ -303,9 +354,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;padding:1.5rem 
 .totop.show{opacity:1;visibility:visible;transform:none}
 .totop:hover{background:var(--green);border-color:var(--green);color:var(--paper)}
 .totop svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* ---------- reveal on scroll ---------- */
+/* The .rv class is added by site.js, never written in the HTML: with JS off
+   nothing is ever hidden, so the page cannot get stuck blank. Blocks are
+   revealed whole rather than staggered item by item, which keeps the movement
+   in service of the reading order instead of decorating it. */
+.rv{opacity:0;transform:translateY(16px);
+  transition:opacity .65s ease,transform .65s cubic-bezier(.22,.61,.36,1)}
+.rv.in{opacity:1;transform:none}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .totop{transition:opacity .2s,visibility .2s;transform:none}
+  /* Belt and braces: site.js already skips the observer under this setting, so
+     nothing gets .rv at all. This covers a preference changed mid-session. */
+  .rv{opacity:1;transform:none;transition:none}
 }
 
 /* ---------- responsive ---------- */
@@ -343,13 +406,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;padding:1.5rem 
   .logos .l-tcd{height:40px}
   .totop{right:1rem;bottom:1rem;width:40px;height:40px}
   /* 76px is a third of a 375px card: too much of the row for a decorative mark. */
-<<<<<<< HEAD
-  .tl .card:has(.cardlogo){grid-template-columns:56px 1fr;gap:.85rem}
-  .cardlogo{max-height:30px}
-=======
   .tl .card:has(.cardlogo){grid-template-columns:60px 1fr;gap:.9rem}
   .cardlogo{max-height:32px}
->>>>>>> origin/main
 }
 
 @media(max-width:400px){
