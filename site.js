@@ -114,6 +114,207 @@
     });
   }
 
+  // Copy to clipboard, used by the BibTeX chips and the email panel.
+  // navigator.clipboard is unavailable when the page is opened straight from
+  // disk (file://), which is how the README says to preview it, so the old
+  // execCommand path stays as the fallback. The callback reports whether the
+  // text actually made it, because both callers show something different when
+  // it did not.
+  function copyText(text, done) {
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (err) {
+        ok = false;
+      }
+      ta.remove();
+      return ok;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () {
+          done(true);
+        },
+        function () {
+          done(legacy());
+        }
+      );
+    } else {
+      done(legacy());
+    }
+  }
+
+  // BibTeX. The entry for each paper sits in the HTML in a
+  // <script type="application/x-bibtex">, which the browser leaves alone: it is
+  // never parsed, never displayed, and survives copy-paste exactly as written.
+  // The chip that copies it is built here, so with JS off no button appears
+  // promising something that cannot happen.
+  var bibItems = document.querySelectorAll(
+    '.pitem script[type="application/x-bibtex"]'
+  );
+  bibItems.forEach(function (source) {
+    var item = source.closest(".pitem");
+    var chips = item ? item.querySelector(".chips") : null;
+    if (!chips) return;
+    // textContent, not innerHTML: the entry contains braces and quotes that
+    // must reach the clipboard as typed.
+    var entry = source.textContent.trim();
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip bibchip";
+    btn.textContent = "BibTeX";
+    chips.appendChild(btn);
+
+    btn.addEventListener("click", function () {
+      copyText(entry, function (ok) {
+        if (ok) {
+          btn.classList.add("ok");
+          btn.textContent = "Copied";
+          setTimeout(function () {
+            btn.classList.remove("ok");
+            btn.textContent = "BibTeX";
+          }, 1900);
+          return;
+        }
+        // Clipboard refused. Rather than fail silently, put the entry on the
+        // page and select it, so the copy can still be made by hand.
+        var out = item.querySelector(".bibout");
+        if (!out) {
+          out = document.createElement("pre");
+          out.className = "bibout";
+          out.tabIndex = -1;
+          out.textContent = entry;
+          chips.parentNode.insertBefore(out, chips.nextSibling);
+        }
+        var range = document.createRange();
+        range.selectNodeContents(out);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        out.focus();
+      });
+    });
+  });
+
+  // Publication filters. Built from the items themselves rather than a list
+  // written by hand: the year comes from each item's own .pyear, the kind from
+  // the heading of the section it sits in. Adding a publication in the existing
+  // markup therefore updates the filters with it, and there is no second place
+  // to keep in step.
+  var filterList = document.querySelector(".plist");
+  var pageHead = document.querySelector(".pagehead");
+  if (filterList && pageHead && document.querySelectorAll(".pitem").length > 2) {
+    var records = [];
+    document.querySelectorAll(".pitem").forEach(function (item) {
+      var section = item.closest("section");
+      var heading = section ? section.querySelector(".subh") : null;
+      var yearEl = item.querySelector(".pyear");
+      records.push({
+        el: item,
+        section: section,
+        year: yearEl ? yearEl.textContent.trim() : "",
+        kind: heading ? heading.textContent.trim() : ""
+      });
+    });
+
+    // A facet with a single value filters nothing, so it is not offered.
+    function valuesOf(key) {
+      var seen = [];
+      records.forEach(function (r) {
+        if (r[key] && seen.indexOf(r[key]) === -1) seen.push(r[key]);
+      });
+      return seen;
+    }
+    var kinds = valuesOf("kind");
+    var years = valuesOf("year").sort().reverse();
+
+    if (kinds.length > 1 || years.length > 1) {
+      var bar = document.createElement("div");
+      bar.className = "pfilter";
+      bar.setAttribute("role", "group");
+      bar.setAttribute("aria-label", "Filter publications");
+
+      var status = document.createElement("p");
+      status.className = "pfilter-status";
+      // polite, not assertive: this is a summary of what just happened, not an
+      // interruption worth cutting across whatever is being read.
+      status.setAttribute("aria-live", "polite");
+
+      function addChip(label, key, value) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip fchip";
+        b.textContent = label;
+        b.dataset.key = key;
+        b.dataset.value = value;
+        bar.appendChild(b);
+        return b;
+      }
+
+      addChip("All", "", "").classList.add("k");
+      if (kinds.length > 1) {
+        kinds.forEach(function (k) {
+          var n = records.filter(function (r) { return r.kind === k; }).length;
+          addChip(k + " (" + n + ")", "kind", k);
+        });
+      }
+      if (years.length > 1) {
+        // Kinds and years are two different questions. Without a rule between
+        // them the row reads as one long list of unrelated chips.
+        if (kinds.length > 1) {
+          var sep = document.createElement("span");
+          sep.className = "fsep";
+          sep.setAttribute("aria-hidden", "true");
+          bar.appendChild(sep);
+        }
+        years.forEach(function (y) {
+          var n = records.filter(function (r) { return r.year === y; }).length;
+          addChip(y + " (" + n + ")", "year", y);
+        });
+      }
+
+      function applyFilter(key, value) {
+        var shown = 0;
+        records.forEach(function (r) {
+          var match = !key || r[key] === value;
+          r.el.hidden = !match;
+          if (match) shown++;
+        });
+        // A heading with nothing under it is worse than no heading, so a
+        // section whose items are all filtered out goes with them.
+        document.querySelectorAll(".plist").forEach(function (list) {
+          var section = list.closest("section");
+          if (!section) return;
+          var live = section.querySelectorAll(".pitem:not([hidden])").length;
+          section.hidden = live === 0;
+        });
+        status.textContent = key
+          ? "Showing " + shown + (shown === 1 ? " publication" : " publications")
+          : "";
+      }
+
+      bar.addEventListener("click", function (e) {
+        var b = e.target.closest(".fchip");
+        if (!b) return;
+        bar.querySelectorAll(".fchip").forEach(function (other) {
+          other.classList.toggle("k", other === b);
+        });
+        applyFilter(b.dataset.key, b.dataset.value);
+      });
+
+      pageHead.appendChild(bar);
+      pageHead.appendChild(status);
+    }
+  }
+
   // Email panel. A bare mailto: link does nothing at all on a machine with no
   // mail client registered, which is most of them now: the click is swallowed
   // and the visitor gets no feedback. Every mailto: on the page opens a small
@@ -161,42 +362,18 @@
       }
     }
 
-    // execCommand is deprecated, but navigator.clipboard is unavailable when the
-    // page is opened straight from disk (file://), which is how the README says
-    // to preview it. The address stays selectable either way.
-    function legacyCopy(text) {
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.setAttribute("readonly", "");
-      ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
-      document.body.appendChild(ta);
-      ta.select();
-      var ok = false;
-      try {
-        ok = document.execCommand("copy");
-      } catch (err) {
-        ok = false;
-      }
-      ta.remove();
-      return ok;
-    }
-
+    // The address stays selectable in the panel either way, so a refused
+    // clipboard leaves the visitor no worse off than before.
     function copyAddress(address, btn) {
-      function confirmCopy() {
+      copyText(address, function (ok) {
+        if (!ok) return;
         btn.classList.add("ok");
         btn.textContent = "Copied";
         setTimeout(function () {
           btn.classList.remove("ok");
           btn.textContent = "Copy";
         }, 1900);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(address).then(confirmCopy, function () {
-          if (legacyCopy(address)) confirmCopy();
-        });
-      } else if (legacyCopy(address)) {
-        confirmCopy();
-      }
+      });
     }
 
     function mailOpen(link) {

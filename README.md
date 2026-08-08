@@ -30,16 +30,17 @@ python -m http.server 8000
 | `cv.html` | The **Background** page: five collapsible sections, all open by default, plus the PDF download |
 | `beyond.html` | Outreach and mentoring. The Music and Three cities sections exist in the file but are commented out until their content is written |
 | `styles.css` | Every style, shared by the four pages |
-| `site.js` | Mobile menu, figure lightbox, email panel, reveal on scroll, reading progress, scroll spy, back-to-top button, footer year |
+| `site.js` | Mobile menu, figure lightbox, email panel, BibTeX copy, publication filters, reveal on scroll, reading progress, scroll spy, back-to-top button, footer year |
 | `images/` | Portrait, paper figures, institution logos, galleries |
 | `cv/` | `CV_BenedettaPerrone.pdf` |
 
 ### What `site.js` does
 
-Seven things, all progressive enhancement. The site stays readable and
+Nine things, all progressive enhancement. The site stays readable and
 navigable with JavaScript off: you lose the mobile menu, nothing fades in, the
-figures open as plain image files instead of in the lightbox, and the email
-links fall back to the plain `mailto:` they already are.
+figures open as plain image files instead of in the lightbox, the email links
+fall back to the plain `mailto:` they already are, and the BibTeX and filter
+controls simply never appear rather than appearing and doing nothing.
 
 1. **Mobile menu.** Below 960px the nav becomes a drop-down panel. The script
    opens and closes it, keeps `aria-expanded` correct for screen readers, closes
@@ -57,21 +58,35 @@ links fall back to the plain `mailto:` they already are.
    whoever does have a desktop client. Closes on the X, on Esc, or on a click
    outside; Tab stays inside it; focus returns to the icon on close.
    Ctrl-clicking a mail icon still gets the browser's own behaviour.
-4. **Reveal on scroll.** Section blocks fade up as they come into view, once
+4. **BibTeX copy.** Every publication carries its entry in the HTML, in a
+   `<script type="application/x-bibtex">` block inside its `<article>`. The
+   browser never parses or displays that type, so the entry survives exactly as
+   written, braces and all. The chip that copies it is built by the script. If
+   the clipboard refuses, the entry is printed under the chips and selected, so
+   it can still be copied by hand.
+5. **Publication filters.** A row of chips under the page title on
+   `publications.html`, one selection at a time. **The chips are derived from
+   the items**, not from a list written by hand: the year comes from each item's
+   own `.pyear`, the kind from the `.subh` heading of the section it sits in.
+   Adding a publication in the existing markup therefore updates the filters
+   with it, and there is nothing to keep in step. A facet with only one value is
+   not offered, a section whose items are all filtered out is hidden with them,
+   and the result count is announced through `aria-live`.
+6. **Reveal on scroll.** Section blocks fade up as they come into view, once
    each. The hidden state is applied from the script, never written into the
    HTML, so without JavaScript nothing is ever hidden. Skipped entirely under
    `prefers-reduced-motion`.
-5. **Reading progress.** A 2px green bar on the bottom edge of the sticky
+7. **Reading progress.** A 2px green bar on the bottom edge of the sticky
    header, tracking how far down the document you are.
-6. **Scroll spy.** The green underline in the nav follows the section you are
+8. **Scroll spy.** The green underline in the nav follows the section you are
    reading. Sections say which link they belong to through `data-nav`, holding
    that link's own `href`. Projects deliberately has none: leaving it out keeps
    the indicator moving in one direction instead of flicking back to Home in
    the middle of the page. With no section in view the underline returns to the
    link marked `.on` in the HTML, which is the current page.
-7. **Back to top.** A round button appears bottom right after 500px of scroll.
+9. **Back to top.** A round button appears bottom right after 500px of scroll.
    Injected from the script rather than repeated in four HTML files.
-8. **Footer year.** Writes the current year so the copyright does not age.
+10. **Footer year.** Writes the current year so the copyright does not age.
 
 ---
 
@@ -198,6 +213,19 @@ and both images open in the lightbox.
 > (Elsevier) is published open access under CC-BY on this article, which is why
 > its figure is here too. Check the licence before adding a figure from anywhere
 > else.
+
+### Adding a publication
+
+Copy an existing `<article class="pitem">` in `publications.html`, keeping the
+`.pyear` span and the section it belongs to: the filter chips read both, so they
+update on their own. Add its BibTeX in a
+`<script type="application/x-bibtex">` inside the article, after the `.chips`
+div, and the copy chip appears with it. Continue the `.pnum` numbering.
+
+> **Author names in BibTeX.** The entries use full first names only where the
+> site states them. Co-authors are initials, and the longer author lists end in
+> `and others`, which is the BibTeX idiom that renders as "et al.". Expand them
+> if you want the full list in a citation.
 
 ### Optional additions
 
