@@ -1,5 +1,5 @@
 // Mobile navigation drawer, figure lightbox, email panel, reveal on scroll,
-// reading progress, scroll spy, back to top, year stamp.
+// scroll spy, back to top, year stamp.
 (function () {
   var toggle = document.getElementById("navToggle");
   var menu = document.getElementById("navMenu");
@@ -486,7 +486,7 @@
     });
   }
 
-  // Back to top. Built here rather than repeated in four HTML files, and it is
+  // Back to top. Built here rather than repeated in every HTML file, and it is
   // only useful with JS anyway (it has to react to the scroll position).
   var toTop = document.createElement("button");
   toTop.type = "button";
@@ -501,25 +501,13 @@
     window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
   });
 
-  // Reading progress, riding the bottom edge of the sticky header. Injected
-  // rather than written into four HTML files, and meaningless without JS.
-  var progress = null;
-  var headerEl = document.querySelector("header");
-  if (headerEl) {
-    progress = document.createElement("div");
-    progress.className = "progress";
-    // Decorative: the scroll position is already conveyed by the scrollbar, so
-    // announcing it again would only add noise to a screen reader.
-    progress.setAttribute("aria-hidden", "true");
-    headerEl.appendChild(progress);
-  }
+  // (The green reading-progress bar under the header was removed in
+  // October 2026 at the owner's request.)
 
-  // Scroll spy. The nav is made of page links, not anchors, so a section says
-  // which link it belongs to through data-nav, holding that link's own href.
-  // Sections without the attribute (Projects, which exists only on the home
-  // page) deliberately have none: the previous link stays lit while you pass
-  // through them, which keeps the indicator moving in one direction instead of
-  // flicking back to Home in the middle of the page.
+  // Scroll spy. Switched off in practice: it only acts on elements carrying a
+  // data-nav attribute, and none are left in the HTML, because every menu item
+  // is now a separate page and the underline should mark only the page you are
+  // on. Add data-nav="page.html" to a section to bring it back.
   var spySections = document.querySelectorAll("[data-nav]");
   var navLinks = document.querySelectorAll(".navgroup a");
   // The link marked .on in the HTML is the current *page*. It is what the
@@ -538,10 +526,9 @@
         active = spySections[i].getAttribute("data-nav");
       }
     }
-    // The closing blocks, Beyond and Contact, are together shorter than a
-    // viewport, so scrolling can run out before their tops ever reach the line
-    // above and Contact would never light up. At the bottom of the document the
-    // last section is the one you are looking at, by definition.
+    // The closing blocks are together shorter than a viewport, so scrolling can
+    // run out before their tops ever reach the line above. At the bottom of the
+    // document the last section is the one you are looking at, by definition.
     var atBottom =
       window.innerHeight + window.scrollY >=
       document.documentElement.scrollHeight - 4;
@@ -564,13 +551,6 @@
   function sync() {
     var y = window.scrollY;
     toTop.classList.toggle("show", y > 500);
-    if (progress) {
-      // Denominator is the scrollable distance, not the document height, so a
-      // page shorter than the viewport reports 0 rather than dividing by zero.
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      var ratio = max > 0 ? Math.min(y / max, 1) : 0;
-      progress.style.transform = "scaleX(" + ratio + ")";
-    }
     syncSpy();
     ticking = false;
   }

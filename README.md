@@ -37,7 +37,7 @@ python -m http.server 8000
 | `beyond.html` | Outreach and mentoring, In my own time. The Music and Three cities sections exist in the file but are commented out until their content is written |
 | `contact.html` | Email, office address, research profiles (Scholar, ORCID, LinkedIn, GitHub), CV download |
 | `styles.css` | Every style, shared by the five pages |
-| `site.js` | Mobile menu, figure lightbox, email panel, BibTeX copy, publication filters, reveal on scroll, reading progress, back-to-top button, footer year |
+| `site.js` | Mobile menu, figure lightbox, email panel, BibTeX copy, publication filters, reveal on scroll, back-to-top button, footer year |
 | `sitemap.xml` | The five pages, for Google Search Console |
 | `robots.txt` | Allows everything and points crawlers to the sitemap. It works because the site sits at the root of the address |
 | `images/` | Portrait, paper figures, institution logos, galleries |
@@ -83,7 +83,9 @@ never appear rather than appearing and doing nothing.
    kind from the `.subh` heading of the section).
 6. **Reveal on scroll.** Section blocks fade up as they come into view, once
    each. Skipped under `prefers-reduced-motion`.
-7. **Reading progress.** A 2px green bar on the bottom edge of the sticky header.
+7. **Reading progress: removed.** There used to be a thin green bar under the
+   header that filled up as you scrolled. It was taken out on request in
+   October 2026; both the script and its style are gone.
 8. **Scroll spy: switched off.** The code is still in `site.js`, but it only
    acts on elements with a `data-nav` attribute, and none are left in the HTML.
    This is deliberate: when the underline followed the scroll on the home page,
@@ -158,7 +160,7 @@ to the nav of every page and to `sitemap.xml`.
   of `styles.css`, so the palette changes in one place.
 - **Green carries the page, sage stays out of the way.** Green is on the name in
   the header, the hero and page headings, the portrait frame, the publication
-  numbers, the timeline spine, the buttons and the reading progress bar. Sage
+  numbers, the timeline spine, and the buttons. Sage
   keeps the quiet parts: side labels, meta lines, captions.
 - **The portrait is framed, not outlined**: a paper gap, then a solid green rule
   around it.
