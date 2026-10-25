@@ -35,6 +35,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(250,248,243,.9);backdrop
 .navmenu{display:flex;align-items:center;gap:1.55rem}
 .navgroup{display:flex;gap:1.55rem;list-style:none}
 .navsplit{width:1px;height:20px;background:var(--rule)}
+/* The underline (.on) marks the page you are on, and only that: every item in
+   the menu is a separate page, so the menu never tracks the scroll. */
 .navgroup a{text-decoration:none;font-size:.79rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-bottom:4px;border-bottom:1px solid transparent;transition:.16s}
 .navgroup.pages a{color:var(--green)}
 .navgroup a:hover,.navgroup a.on{color:var(--green);border-color:var(--green)}
@@ -106,6 +108,9 @@ header{position:sticky;top:0;z-index:20;background:rgba(250,248,243,.9);backdrop
 .strip div + div{border-left:1px solid var(--rule);padding-left:2.2rem}
 .strip dt{color:var(--sage);margin-bottom:.45rem}
 .strip dd{font-size:.95rem;line-height:1.5}
+/* The same strip reused inside a section (Background summary on the home
+   page), where it sits under a heading instead of under the hero. */
+.sec .strip{margin-top:2.2rem}
 
 /* ---------- section shell ---------- */
 section{padding:5.5rem 0;scroll-margin-top:88px}
@@ -249,9 +254,9 @@ body.lboxopen{overflow:hidden}
 .pfig .slot{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#f6f4ee,#f6f4ee 9px,#f0ede4 9px,#f0ede4 18px);display:grid;place-items:center;text-align:center;padding:1rem}
 .pfig .slot span{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);line-height:1.8}
 .figcap{margin-top:.65rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);line-height:1.6}
+/* Closes the home Publications band with a real button to the full page,
+   lined up under the item text rather than under the side column. */
 .pmore{display:grid;grid-template-columns:190px 1fr;gap:4rem;margin-top:2.6rem}
-.pmore a{font-size:.9rem;color:var(--green);text-decoration:none;border-bottom:1px solid var(--sage);padding-bottom:3px}
-.pmore a:hover{border-color:var(--green)}
 
 /* ---------- projects ---------- */
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:2.6rem}
@@ -346,7 +351,7 @@ body.lboxopen{overflow:hidden}
    Without it the contact strip lands straight onto the dark Beyond band and
    looks like a leftover row rather than the end of the page.
    scroll-margin-top: .contact is not a <section>, so it does not inherit the
-   section offset, and the nav links to it. */
+   section offset. */
 .contact{padding:3.6rem 0 2.6rem;background:var(--paper-2);border-top:1px solid var(--rule);scroll-margin-top:88px}
 .contact .wrap{display:grid;grid-template-columns:190px 1fr;gap:4rem;align-items:start}
 .contact > .wrap > .label{color:var(--sage);padding-top:.15rem}
@@ -357,6 +362,13 @@ body.lboxopen{overflow:hidden}
 .clist li:hover svg{stroke:var(--green)}
 .clist a{color:var(--green);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1px;transition:.16s;word-break:break-word}
 .clist a:hover{border-color:var(--green)}
+/* Contact page: the same list, one item per line, slightly larger. */
+.clist.stack{flex-direction:column;gap:1.1rem}
+.clist.stack li{font-size:.98rem}
+/* Brand icons (Scholar, ORCID, LinkedIn, GitHub) are drawn as filled shapes,
+   not outlines, so they take the colour on fill rather than stroke. */
+.clist svg.fill{fill:var(--sage);stroke:none;transition:fill .16s}
+.clist li:hover svg.fill{fill:var(--green)}
 /* Rule sits on .wrap, not on <footer>: inset to the content column it reads as a
    divider inside the footer block rather than a second full-bleed edge. */
 footer{background:var(--paper-2)}
@@ -401,6 +413,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;padding:1.5rem 
   section{padding:4rem 0}
   .pubs{padding:4rem 0}
   .clist{flex-direction:column;gap:1rem}
+  /* The empty first cell of .pmore only lines the button up with the text
+     column; once everything is one column it would just add a gap. */
+  .pmore > span{display:none}
   /* The filter row wraps at this width, and a rule between two groups means
      nothing once they no longer sit on one line. */
   .pfilter .fsep{display:none}
@@ -433,12 +448,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;padding:1.5rem 
   .cardlogo{max-height:32px}
 }
 
-@media(max-width:400px){
-  /* No room for name + burger + 4 icons. The icons live in the hero and the
-     contact block too, so drop the header copy rather than cramping the row. */
+@media(max-width:440px){
+  /* No room for name + burger + 5 icons. The icons live in the hero and on the
+     Contact page too, so drop the header copy rather than cramping the row. */
   header .socials{display:none}
 }
-
-
-
-

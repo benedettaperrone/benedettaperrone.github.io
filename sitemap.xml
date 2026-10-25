@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://benedettaperrone.github.io/portfolio/</loc>
+    <loc>https://benedettaperrone.github.io/</loc>
+    <lastmod>2026-10-25</lastmod>
   </url>
   <url>
-    <loc>https://benedettaperrone.github.io/portfolio/publications.html</loc>
+    <loc>https://benedettaperrone.github.io/publications.html</loc>
+    <lastmod>2026-10-25</lastmod>
   </url>
   <url>
-    <loc>https://benedettaperrone.github.io/portfolio/cv.html</loc>
+    <loc>https://benedettaperrone.github.io/cv.html</loc>
+    <lastmod>2026-10-25</lastmod>
   </url>
   <url>
-    <loc>https://benedettaperrone.github.io/portfolio/beyond.html</loc>
+    <loc>https://benedettaperrone.github.io/beyond.html</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://benedettaperrone.github.io/contact.html</loc>
+    <lastmod>2026-10-25</lastmod>
   </url>
 </urlset>
